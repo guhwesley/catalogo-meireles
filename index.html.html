@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo - Crediário Meirelles</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      /* Azul baseado na logo */
+      --primary: #2c4e6a; 
+      --accent: #2c4e6a;
+      --bg: #f1f5f9;
+      --text: #1e293b;
+      --whatsapp: #22c55e;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+
+    body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; color: var(--text); }
+
+    /* HEADER PREMIUM */
+    header {
+      background-color: var(--primary);
+      padding: 40px 20px;
+      text-align: center;
+      color: white;
+      background-image: linear-gradient(135deg, #1e3a52 0%, #2c4e6a 100%);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .logo { 
+      max-width: 280px; /* Logo maior */
+      height: auto;
+      border-radius: 12px; 
+      margin-bottom: 15px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+
+    .header-subtitle {
+      font-size: 16px;
+      opacity: 0.85;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .main-title {
+      font-size: 28px;
+      margin: 25px 0 10px 0;
+      color: var(--primary);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* BARRA DE CATEGORIAS PREMIUM */
+    .nav-categorias {
+      background: white;
+      padding: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      overflow-x: auto;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 768px) {
+      .nav-categorias { justify-content: flex-start; padding: 12px; }
+    }
+
+    .nav-categorias::-webkit-scrollbar { display: none; }
+
+    .cat-btn {
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: none;
+      background: #f1f5f9;
+      color: #64748b;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cat-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(44, 78, 106, 0.3);
+    }
+
+    .cat-btn:hover:not(.active) {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px 15px; }
+
+    /* CAMPO DE BUSCA */
+    .search-box { margin-bottom: 35px; text-align: center; padding-top: 10px; }
+    #filtro {
+      width: 100%; max-width: 550px; padding: 15px 30px;
+      border-radius: 50px; border: 2px solid #e2e8f0; outline: none;
+      font-size: 16px; transition: 0.3s;
+      background: white;
+    }
+    #filtro:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(44, 78, 106, 0.1); }
+
+    /* GRID E CARDS */
+    .grid-produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .card { 
+      background: white; 
+      border-radius: 20px; 
+      overflow: hidden; 
+      box-shadow: var(--card-shadow); 
+      display: flex; 
+      flex-direction: column; 
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+      border: 1px solid #ffffff;
+    }
+
+    .card:hover { transform: translateY(-10px); }
+    
+    .img-box { width: 100%; height: 250px; background: #f8fafc; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .card:hover .img-box img { transform: scale(1.1); }
+    
+    .info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+    .cat-tag { font-size: 10px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 5px; }
+    .nome { font-size: 18px; font-weight: 600; margin: 5px 0 15px 0; color: #0f172a; height: 48px; overflow: hidden; line-height: 1.4; }
+    .preco { font-size: 24px; color: var(--primary); font-weight: 800; margin-bottom: 20px; display: flex; align-items: baseline; }
+    
+    .btn-whats {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--whatsapp); color: white; text-align: center;
+      padding: 14px; text-decoration: none; font-weight: 700; border-radius: 12px;
+      transition: 0.3s; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+    }
+    .btn-whats:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+    @media (max-width: 600px) {
+      .grid-produtos { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+      .img-box { height: 180px; }
+      .nome { font-size: 15px; height: 42px; }
+      .main-title { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://i.postimg.cc/N0D8vD8T/crediariomeirelles.jpg" alt="Crediário Meirelles" class="logo">
+  <div class="header-subtitle">QUALIDADE E CONFIANÇA PARA SUA CASA</div>
+</header>
+
+<div class="nav-categorias" id="barraCategorias">
+  <button class="cat-btn active" onclick="filtrarCategoria('todos', this)"><i class="fas fa-home"></i> Todos</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Cozinha', this)"><i class="fas fa-utensils"></i> Cozinha</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Tapetes', this)"><i class="fas fa-rug"></i> Tapetes</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Cama/Banho', this)"><i class="fas fa-bed"></i> Cama/Banho</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Cortinas', this)"><i class="fas fa-scroll"></i> Cortinas</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Móveis', this)"><i class="fas fa-couch"></i> Móveis</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Lavanderia', this)"><i class="fas fa-tshirt"></i> Lavanderia</button>
+</div>
+
+<div class="container">
+  <div class="main-title">Catálogo Oficial Meirelles</div>
+  
+  <div class="search-box">
+    <input type="text" id="filtro" placeholder="O que você está procurando?" onkeyup="buscarTexto()">
+  </div>
+
+  <div class="grid-produtos" id="lista"></div>
+</div>
+
+<script>
+  const WHATSAPP_CONTATO = "554888337779";
+
+  const produtos = [
+    // COZINHA
+    { cat: "Cozinha", nome: "Panela de pressão", preco: 450, url: "https://i.postimg.cc/kVW80MMX/Panela-de-pressao-valor-450-reais.jpg" },
+    { cat: "Cozinha", nome: "Jogo de panela (tampa vidro)", preco: 500, url: "https://i.postimg.cc/5H8vh99t/Panela-tampa-de-vidro-5-pecas-valor-500-reais.jpg" },
+    { cat: "Cozinha", nome: "Frigideira 3 peças (Kit)", preco: 180, url: "https://i.postimg.cc/bspp9Y8x/Kit-frigideira-valor-180-reais.jpg" },
+    { cat: "Cozinha", nome: "Frigideira grande", preco: 350, url: "https://i.postimg.cc/N5BBkGYH/Frigideira-grande-valor-350-reais.jpg" },
+    { cat: "Cozinha", nome: "Frigideira grill", preco: 180, url: "https://i.postimg.cc/ppRRJVxD/Frigideira-grill-valor-180-reais.jpg" },
+    { cat: "Cozinha", nome: "Panelão", preco: 350, url: "https://i.postimg.cc/rd5WByy4/Panelao-valor-300-reais.jpg" },
+    { cat: "Cozinha", nome: "Kit silicone", preco: 180, url: "https://i.postimg.cc/1gD6kRRS/Kit-silicone-valor-200-reais.jpg" },
+    { cat: "Cozinha", nome: "Pote de vidro", preco: 50, url: "https://i.postimg.cc/94yT6XXZ/Pote-de-vidro-tapoe-valor-50-reais-Unidade.jpg" },
+    { cat: "Cozinha", nome: "Jogo de Pote", preco: 150, url: "https://i.postimg.cc/LJcLQgSm/Jogo-de-Pote-tapoe-5-pecas-valor-180.jpg" },
+    
+    // TAPETES
+    { cat: "Tapetes", nome: "Kit de cozinha cinzal", preco: 400, url: "https://i.postimg.cc/HrqXv8mx/Kit-cozinha-Tapete-cinzal-R-400.jpg" },
+    { cat: "Tapetes", nome: "Kit de cozinha j serrano", preco: 300, url: "https://i.postimg.cc/75F0tJ4b/Kit-cozinha-3-pecas-valor-300-reais.jpg" },
+    { cat: "Tapetes", nome: "Tapete de sala peludo", preco: 350, url: "https://i.postimg.cc/YGkgMcjJ/Tapete-peludo-1-40-por-2-00-valor-350-reais.jpg" },
+    { cat: "Tapetes", nome: "Tapete sala veludo liso", preco: 450, url: "https://i.postimg.cc/CBYDSydr/Tapete-indiana-1-50-por-2-00-valor-450.jpg" },
+    { cat: "Tapetes", nome: "Tapete estampado", preco: 400, url: "https://i.postimg.cc/PphZTGN6/Tapete-geometrico-1-50-por-2-00-valor-400-reais.jpg" },
+    { cat: "Tapetes", nome: "Tapete de entrada", preco: 120, url: "https://i.postimg.cc/phx8RNys/Tapete-entrada-valor-120-reais.jpg" },
+
+    // CAMA / BANHO
+    { cat: "Cama/Banho", nome: "Jogo de banheiro", preco: 200, url: "https://i.postimg.cc/cvpwktWL/Kit-3-pecas-banheiro-valor-200-reais.jpg" },
+    { cat: "Cama/Banho", nome: "Jogo de Lençol casal", preco: 300, url: "https://i.postimg.cc/nCppGVZY/Lencol-premium-casal-valor-300-reais.jpg" },
+    { cat: "Cama/Banho", nome: "Cobre Leito (Colcha)", preco: 300, url: "https://i.postimg.cc/HVdd9WHM/Cobre-leito-valor-300-reais.jpg" },
+    { cat: "Cama/Banho", nome: "Lençol solteiro", preco: 270, url: "https://i.postimg.cc/MvqqmZxm/Lencol-solteiro-valor-270-reais.jpg" },
+    { cat: "Cama/Banho", nome: "Cobredom", preco: 400, url: "https://i.postimg.cc/jDpP3nbp/Cobredom-valor-400-reai.jpg" },
+    { cat: "Cama/Banho", nome: "Manta que brilha", preco: 180, url: "https://i.postimg.cc/yJ09M667/Manta-que-brilha-no-escuro-valor-180-reais.jpg" },
+    { cat: "Cama/Banho", nome: "Kit manta infantil", preco: 200, url: "https://i.postimg.cc/Lqjfc44R/Kit-manta-3-pecas-bebe-valor-200-reais.jpg" },
+    
+    // CORTINAS
+    { cat: "Cortinas", nome: "Cortina est. black-out", preco: 400, url: "https://i.postimg.cc/68knb4Kx/Cortina-black-out-floral-valor-400-reais.jpg" },
+    { cat: "Cortinas", nome: "Cortina black-out lisa", preco: 400, url: "https://i.postimg.cc/w1CL4Rz8/Cortina-black-out-280-X-230-valor-400.jpg" },
+    { cat: "Cortinas", nome: "Cortina Oxford", preco: 300, url: "https://i.postimg.cc/pmwzc5vt/Cortina-Oxford-280-X-240-valor-300.jpg" },
+
+    // MÓVEIS
+    { cat: "Móveis", nome: "Cadeira fixa (Unidade)", preco: 350, url: "https://i.postimg.cc/MvqqmZxV/Cadeira-fixa-unidade-valor-350-reais.jpg" },
+    { cat: "Móveis", nome: "Mesinha de centro", preco: 250, url: "https://i.postimg.cc/qz44xB0G/Mesinha-de-centro-valor-250-reais.jpg" },
+    { cat: "Móveis", nome: "Espelho grande", preco: 400, url: "https://i.postimg.cc/CR3krn0S/Espelho-grande-valor-400-reais.jpg" },
+    { cat: "Móveis", nome: "Sapateira", preco: 400, url: "https://i.postimg.cc/0MxmPgrS/Sapateira-valor-400.jpg" },
+    { cat: "Móveis", nome: "Bau Grande", preco: 550, url: "https://i.postimg.cc/PCgYVvj3/Bau-grande-valor-600-reais.jpg" },
+    { cat: "Móveis", nome: "Cadeira de balanço", preco: 500, url: "https://i.postimg.cc/BjrH7P07/Cadeira-de-balanco-valor-500-reais.jpg" },
+
+    // LAVANDERIA
+    { cat: "Lavanderia", nome: "Cesto de roupas 40LT", preco: 180, url: "https://i.postimg.cc/zV88FD5W/Cesto-40LT-valor-180-reais.jpg" },
+    { cat: "Lavanderia", nome: "Varal de chão", preco: 350, url: "https://i.postimg.cc/phx8RNpb/Varal-de-chao-350.jpg" },
+    { cat: "Lavanderia", nome: "Varal grande", preco: 600, url: "https://i.postimg.cc/BLsD4WX3/Varal-grande-valor-600-reais.jpg" }
+  ];
+
+  function carregar(filtroCat = 'todos') {
+    const lista = document.getElementById('lista');
+    const dados = filtroCat === 'todos' ? produtos : produtos.filter(p => p.cat === filtroCat);
+    
+    lista.innerHTML = dados.map(p => {
+      const msgWhats = encodeURIComponent(`Olá Meirelles! Vi no catálogo o produto: ${p.nome} (R$ ${p.preco.toFixed(2)}). Está disponível?`);
+      return `
+        <div class="card" data-nome="${p.nome.toLowerCase()}">
+          <div class="img-box">
+            ${p.url ? `<img src="${p.url}" loading="lazy">` : `<div style="text-align:center;color:#94a3b8;"><i class="fa-solid fa-camera fa-2x"></i><br><span style="font-size:10px">FOTO EM BREVE</span></div>`}
+          </div>
+          <div class="info">
+            <span class="cat-tag">${p.cat}</span>
+            <div class="nome">${p.nome}</div>
+            <div class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</div>
+            <a href="https://wa.me/${WHATSAPP_CONTATO}?text=${msgWhats}" target="_blank" class="btn-whats">
+              <i class="fa-brands fa-whatsapp"></i> Tenho Interesse
+            </a>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function filtrarCategoria(cat, btn) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    carregar(cat);
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  }
+
+  function buscarTexto() {
+    const termo = document.getElementById('filtro').value.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+      const nome = card.getAttribute('data-nome');
+      card.style.display = nome.includes(termo) ? 'flex' : 'none';
+    });
+  }
+
+  window.onload = () => carregar();
+</script>
+
+</body>
+</html>
