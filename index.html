@@ -1,122 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Oficial - Crediário Meirelles</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    :root { --primary: #1e3a52; --bg: #f8fafc; --text: #0f172a; --whatsapp: #25d366; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); margin: 0; color: var(--text); line-height: 1.5; }
-    
-    header { 
-      background: #1e3a52; padding: 40px 20px; text-align: center; color: white;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-    }
-    .logo { max-width: 180px; border-radius: 15px; margin-bottom: 15px; border: 3px solid rgba(255,255,255,0.1); }
-    .header-text { font-size: 14px; letter-spacing: 2px; opacity: 0.9; text-transform: uppercase; font-weight: 500; }
-
-    .nav-categorias { 
-      background: white; padding: 15px; position: sticky; top: 0; z-index: 100;
-      display: flex; justify-content: center; gap: 10px; overflow-x: auto;
-      border-bottom: 1px solid #e2e8f0; scrollbar-width: none;
-    }
-    .cat-btn { 
-      padding: 10px 20px; border-radius: 50px; border: none; background: #f1f5f9;
-      color: #475569; cursor: pointer; font-weight: 600; white-space: nowrap; transition: 0.3s;
-      display: flex; align-items: center; gap: 8px; font-size: 14px;
-    }
-    .cat-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    .search-section { text-align: center; margin-bottom: 40px; }
-    .search-section h2 { margin-bottom: 20px; color: var(--primary); font-weight: 800; }
-    #filtro { 
-      width: 100%; max-width: 600px; padding: 16px 25px; border-radius: 50px; 
-      border: 2px solid #e2e8f0; outline: none; font-size: 16px; transition: 0.3s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    }
-    #filtro:focus { border-color: var(--primary); box-shadow: 0 4px 12px rgba(30,58,82,0.1); }
-
-    .grid-produtos { 
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
-      gap: 25px; 
-    }
-    .card { 
-      background: white; border-radius: 20px; overflow: hidden; 
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: 0.3s; 
-      display: flex; flex-direction: column; border: 1px solid #f1f5f9;
-    }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
-
-    .img-box { width: 100%; aspect-ratio: 1/1; background: white; display: flex; align-items: center; justify-content: center; cursor: zoom-in; position: relative; }
-    .img-box img { width: 90%; height: 90%; object-fit: contain; }
-
-    .info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-    .cat-tag { font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
-    .nome { font-size: 17px; font-weight: 700; margin-bottom: 12px; height: 48px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-    .preco { font-size: 24px; color: var(--primary); font-weight: 900; margin-bottom: 20px; }
-
-    .btn-whats { 
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      background: var(--whatsapp); color: white; padding: 14px; text-decoration: none; 
-      font-weight: 700; border-radius: 12px; transition: 0.3s; font-size: 15px;
-    }
-    .btn-whats:hover { background: #1eb956; }
-
-    .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.95); align-items: center; justify-content: center; padding: 20px; }
-    .modal-content { max-width: 100%; max-height: 100%; border-radius: 15px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
-
-    @media (max-width: 600px) {
-      header { padding: 30px 15px; }
-      .grid-produtos { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .container { padding: 12px; }
-      .info { padding: 12px; }
-      .nome { font-size: 14px; height: 36px; }
-      .preco { font-size: 18px; margin-bottom: 12px; }
-      .btn-whats { padding: 10px; font-size: 13px; border-radius: 10px; }
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <img src="https://i.postimg.cc/N0D8vD8T/crediariomeirelles.jpg" alt="Logo Crediário Meirelles" class="logo">
-  <div class="header-text">Qualidade e Confiança para sua Casa</div>
-</header>
-
-<div class="nav-categorias" id="menu-cat">
-  <button class="cat-btn active" onclick="filtrarCategoria('todos', this)"><i class="fas fa-home"></i> Todos</button>
-  <button class="cat-btn" onclick="filtrarCategoria('Cozinha', this)"><i class="fas fa-utensils"></i> Cozinha</button>
-  <button class="cat-btn" onclick="filtrarCategoria('Tapetes', this)"><i class="fas fa-rug"></i> Tapetes</button>
-  <button class="cat-btn" onclick="filtrarCategoria('Cama/Banho', this)"><i class="fas fa-bed"></i> Cama/Banho</button>
-  <button class="cat-btn" onclick="filtrarCategoria('Cortinas', this)"><i class="fas fa-scroll"></i> Cortinas</button>
-  <button class="cat-btn" onclick="filtrarCategoria('Móveis', this)"><i class="fas fa-chair"></i> Móveis</button>
-  <button class="cat-btn" onclick="filtrarCategoria('Lavanderia', this)"><i class="fas fa-soap"></i> Lavanderia</button>
-</div>
-
-<div class="container">
-  <div class="search-section">
-    <h2>Catálogo Oficial Meirelles</h2>
-    <input type="text" id="filtro" placeholder="O que você está procurando?" onkeyup="buscarTexto()">
-  </div>
-  <div class="grid-produtos" id="lista">
-    <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
-      <i class="fas fa-spinner fa-spin fa-2x" style="color: var(--primary)"></i>
-      <p style="margin-top: 15px">Carregando produtos direto da planilha...</p>
-    </div>
-  </div>
-</div>
-
-<div id="imageModal" class="modal" onclick="this.style.display='none'">
-  <img class="modal-content" id="imgAmpliada">
-</div>
-
 <script>
   const WHATSAPP_CONTATO = "554888337779";
   const SHEET_ID = '16FzPEau-EH0E7P13Mq-CFVT0QZceQMLwTUSQ4aZXXf0';
-  const SHEET_NAME = 'cadastro-produtos';
-  const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+  
+  // COLE O NÚMERO DO SEU GID AQUI (Exemplo: '12345678')
+  const GID = '75482155'; 
+
+  const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
 
   let produtos = [];
 
@@ -124,9 +13,14 @@
     try {
       const response = await fetch(FULL_URL);
       const text = await response.text();
-      const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
       
-      produtos = json.table.rows.map(row => {
+      // Limpeza para extrair o JSON puro
+      const jsonText = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
+      const json = JSON.parse(jsonText);
+      
+      const rows = json.table.rows;
+      
+      produtos = rows.map(row => {
         const c = row.c;
         return {
           cat: c[0] ? String(c[0].v) : "Geral",
@@ -136,13 +30,14 @@
         };
       }).filter(p => p.nome.length > 1 && p.url.startsWith('http'));
 
-      if (produtos.length === 0) throw new Error("Lista vazia");
+      if (produtos.length === 0) throw new Error("Sem dados");
       carregar(); 
     } catch (e) {
+      console.error(e);
       document.getElementById('lista').innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: white; border-radius: 20px;">
-          <i class="fas fa-exclamation-triangle fa-2x" style="color: #ef4444"></i>
-          <p style="margin-top:10px"><b>Erro ao carregar dados!</b><br>Verifique se a aba se chama exatamente: <b>${SHEET_NAME}</b></p>
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+          <p>Erro ao ler a aba <b>cadastro-produtos</b>.</p>
+          <small>Verifique se o número GID no código é o mesmo da sua aba.</small>
         </div>`;
     }
   }
@@ -160,7 +55,7 @@
           <span class="cat-tag">${p.cat}</span>
           <div class="nome">${p.nome}</div>
           <div class="preco">R$ ${p.preco.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
-          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá Meirelles! Vi no catálogo: ${p.nome}. Está disponível?" target="_blank" class="btn-whats">
+          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá! Vi no catálogo: ${p.nome}. Está disponível?" target="_blank" class="btn-whats">
             <i class="fa-brands fa-whatsapp"></i> Tenho Interesse
           </a>
         </div>
@@ -188,5 +83,3 @@
 
   window.onload = buscarDadosDoSheets;
 </script>
-</body>
-</html>
