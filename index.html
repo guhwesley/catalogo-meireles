@@ -1,11 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Oficial - Crediário Meirelles</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root { --primary: #1e3a52; --bg: #f8fafc; --text: #0f172a; --whatsapp: #25d366; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); margin: 0; color: var(--text); }
+    
+    header { background: #1e3a52; padding: 40px 20px; text-align: center; color: white; }
+    .logo { max-width: 180px; border-radius: 15px; margin-bottom: 15px; }
+    .header-text { font-size: 14px; letter-spacing: 2px; opacity: 0.9; text-transform: uppercase; }
+
+    .nav-categorias { 
+      background: white; padding: 15px; position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: center; gap: 10px; overflow-x: auto;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .cat-btn { 
+      padding: 10px 20px; border-radius: 50px; border: none; background: #f1f5f9;
+      color: #475569; cursor: pointer; font-weight: 600; white-space: nowrap; transition: 0.3s;
+    }
+    .cat-btn.active { background: var(--primary); color: white; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .search-section { text-align: center; margin-bottom: 30px; }
+    #filtro { 
+      width: 100%; max-width: 500px; padding: 14px 25px; border-radius: 50px; 
+      border: 2px solid #e2e8f0; outline: none; font-size: 16px;
+    }
+
+    .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
+    
+    .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+    .img-box { width: 100%; aspect-ratio: 1/1; background: white; display: flex; align-items: center; justify-content: center; cursor: zoom-in; }
+    .img-box img { width: 90%; height: 90%; object-fit: contain; }
+
+    .info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+    .cat-tag { font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+    .nome { font-size: 16px; font-weight: 700; margin-bottom: 10px; height: 40px; overflow: hidden; }
+    .preco { font-size: 22px; color: var(--primary); font-weight: 800; margin-bottom: 15px; }
+
+    .btn-whats { 
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--whatsapp); color: white; padding: 12px; text-decoration: none; 
+      font-weight: 700; border-radius: 10px; transition: 0.3s;
+    }
+
+    .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
+    .modal-content { max-width: 90%; max-height: 90%; border-radius: 10px; }
+
+    @media (max-width: 600px) {
+      .grid-produtos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .container { padding: 10px; }
+      .nome { font-size: 13px; height: 32px; }
+      .preco { font-size: 17px; }
+      .btn-whats { font-size: 12px; padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://i.postimg.cc/N0D8vD8T/crediariomeirelles.jpg" alt="Logo" class="logo">
+  <div class="header-text">Qualidade e Confiança para sua Casa</div>
+</header>
+
+<div class="nav-categorias">
+  <button class="cat-btn active" onclick="filtrarCategoria('todos', this)">Todos</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Cozinha', this)">Cozinha</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Tapetes', this)">Tapetes</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Cama/Banho', this)">Cama/Banho</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Cortinas', this)">Cortinas</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Móveis', this)">Móveis</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Lavanderia', this)">Lavanderia</button>
+</div>
+
+<div class="container">
+  <div class="search-section">
+    <input type="text" id="filtro" placeholder="O que você está procurando?" onkeyup="buscarTexto()">
+  </div>
+  <div class="grid-produtos" id="lista">
+    <p style="grid-column: 1/-1; text-align: center;">Carregando catálogo...</p>
+  </div>
+</div>
+
+<div id="imageModal" class="modal" onclick="this.style.display='none'">
+  <img class="modal-content" id="imgAmpliada">
+</div>
+
 <script>
   const WHATSAPP_CONTATO = "554888337779";
   const SHEET_ID = '16FzPEau-EH0E7P13Mq-CFVT0QZceQMLwTUSQ4aZXXf0';
-  
-  // COLE O NÚMERO DO SEU GID AQUI (Exemplo: '12345678')
-  const GID = '75482155'; 
-
-  const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+  const GID_PRODUTOS = '740385436'; 
+  const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID_PRODUTOS}`;
 
   let produtos = [];
 
@@ -13,14 +102,10 @@
     try {
       const response = await fetch(FULL_URL);
       const text = await response.text();
-      
-      // Limpeza para extrair o JSON puro
       const jsonText = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
       const json = JSON.parse(jsonText);
       
-      const rows = json.table.rows;
-      
-      produtos = rows.map(row => {
+      produtos = json.table.rows.map(row => {
         const c = row.c;
         return {
           cat: c[0] ? String(c[0].v) : "Geral",
@@ -30,15 +115,9 @@
         };
       }).filter(p => p.nome.length > 1 && p.url.startsWith('http'));
 
-      if (produtos.length === 0) throw new Error("Sem dados");
       carregar(); 
     } catch (e) {
-      console.error(e);
-      document.getElementById('lista').innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-          <p>Erro ao ler a aba <b>cadastro-produtos</b>.</p>
-          <small>Verifique se o número GID no código é o mesmo da sua aba.</small>
-        </div>`;
+      document.getElementById('lista').innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>Erro ao conectar com a planilha.</p>";
     }
   }
 
@@ -55,7 +134,7 @@
           <span class="cat-tag">${p.cat}</span>
           <div class="nome">${p.nome}</div>
           <div class="preco">R$ ${p.preco.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
-          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá! Vi no catálogo: ${p.nome}. Está disponível?" target="_blank" class="btn-whats">
+          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá Meirelles! Vi no catálogo o produto: ${p.nome}. Está disponível?" target="_blank" class="btn-whats">
             <i class="fa-brands fa-whatsapp"></i> Tenho Interesse
           </a>
         </div>
@@ -83,3 +162,5 @@
 
   window.onload = buscarDadosDoSheets;
 </script>
+</body>
+</html>
