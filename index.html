@@ -7,64 +7,30 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     :root { --primary: #1e3a52; --bg: #f8fafc; --text: #0f172a; --whatsapp: #25d366; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); margin: 0; color: var(--text); }
-    
+    body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
     header { background: #1e3a52; padding: 40px 20px; text-align: center; color: white; }
-    .logo { max-width: 180px; border-radius: 15px; margin-bottom: 15px; }
-    .header-text { font-size: 14px; letter-spacing: 2px; opacity: 0.9; text-transform: uppercase; }
-
-    .nav-categorias { 
-      background: white; padding: 15px; position: sticky; top: 0; z-index: 100;
-      display: flex; justify-content: center; gap: 10px; overflow-x: auto;
-      border-bottom: 1px solid #e2e8f0;
-    }
-    .cat-btn { 
-      padding: 10px 20px; border-radius: 50px; border: none; background: #f1f5f9;
-      color: #475569; cursor: pointer; font-weight: 600; white-space: nowrap; transition: 0.3s;
-    }
+    .logo { max-width: 180px; border-radius: 15px; margin-bottom: 10px; }
+    .nav-categorias { background: white; padding: 15px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: center; gap: 10px; overflow-x: auto; border-bottom: 1px solid #e2e8f0; }
+    .cat-btn { padding: 10px 20px; border-radius: 50px; border: none; background: #f1f5f9; color: #475569; cursor: pointer; font-weight: 600; white-space: nowrap; }
     .cat-btn.active { background: var(--primary); color: white; }
-
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    .search-section { text-align: center; margin-bottom: 30px; }
-    #filtro { 
-      width: 100%; max-width: 500px; padding: 14px 25px; border-radius: 50px; 
-      border: 2px solid #e2e8f0; outline: none; font-size: 16px;
-    }
-
-    .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
-    
+    .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
     .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
-    .img-box { width: 100%; aspect-ratio: 1/1; background: white; display: flex; align-items: center; justify-content: center; cursor: zoom-in; }
+    .img-box { width: 100%; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .img-box img { width: 90%; height: 90%; object-fit: contain; }
-
-    .info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
-    .cat-tag { font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
-    .nome { font-size: 16px; font-weight: 700; margin-bottom: 10px; height: 40px; overflow: hidden; }
-    .preco { font-size: 22px; color: var(--primary); font-weight: 800; margin-bottom: 15px; }
-
-    .btn-whats { 
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      background: var(--whatsapp); color: white; padding: 12px; text-decoration: none; 
-      font-weight: 700; border-radius: 10px; transition: 0.3s;
-    }
-
+    .info { padding: 15px; flex-grow: 1; }
+    .preco { font-size: 22px; color: var(--primary); font-weight: 800; margin: 10px 0; }
+    .btn-whats { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--whatsapp); color: white; padding: 12px; text-decoration: none; font-weight: 700; border-radius: 10px; }
     .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
-    .modal-content { max-width: 90%; max-height: 90%; border-radius: 10px; }
-
-    @media (max-width: 600px) {
-      .grid-produtos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .container { padding: 10px; }
-      .nome { font-size: 13px; height: 32px; }
-      .preco { font-size: 17px; }
-      .btn-whats { font-size: 12px; padding: 10px; }
-    }
+    .modal-content { max-width: 90%; max-height: 90%; }
+    @media (max-width: 600px) { .grid-produtos { grid-template-columns: 1fr 1fr; gap: 10px; } }
   </style>
 </head>
 <body>
 
 <header>
   <img src="https://i.postimg.cc/N0D8vD8T/crediariomeirelles.jpg" alt="Logo" class="logo">
-  <div class="header-text">Qualidade e Confiança para sua Casa</div>
+  <div>Qualidade e Confiança para sua Casa</div>
 </header>
 
 <div class="nav-categorias">
@@ -74,15 +40,11 @@
   <button class="cat-btn" onclick="filtrarCategoria('Cama/Banho', this)">Cama/Banho</button>
   <button class="cat-btn" onclick="filtrarCategoria('Cortinas', this)">Cortinas</button>
   <button class="cat-btn" onclick="filtrarCategoria('Móveis', this)">Móveis</button>
-  <button class="cat-btn" onclick="filtrarCategoria('Lavanderia', this)">Lavanderia</button>
 </div>
 
 <div class="container">
-  <div class="search-section">
-    <input type="text" id="filtro" placeholder="O que você está procurando?" onkeyup="buscarTexto()">
-  </div>
   <div class="grid-produtos" id="lista">
-    <p style="grid-column: 1/-1; text-align: center;">Carregando catálogo...</p>
+    <p style="grid-column: 1/-1; text-align: center;">Sincronizando produtos...</p>
   </div>
 </div>
 
@@ -93,8 +55,10 @@
 <script>
   const WHATSAPP_CONTATO = "554888337779";
   const SHEET_ID = '16FzPEau-EH0E7P13Mq-CFVT0QZceQMLwTUSQ4aZXXf0';
-  const GID_PRODUTOS = '740385436'; 
-  const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID_PRODUTOS}`;
+  const GID = '740385436'; // Aba cadastro-produtos
+
+  // Link forçado para JSON
+  const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&tq=SELECT%20A,B,C,D`;
 
   let produtos = [];
 
@@ -102,40 +66,38 @@
     try {
       const response = await fetch(FULL_URL);
       const text = await response.text();
-      const jsonText = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
-      const json = JSON.parse(jsonText);
+      const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
       
       produtos = json.table.rows.map(row => {
         const c = row.c;
         return {
           cat: c[0] ? String(c[0].v) : "Geral",
           nome: c[1] ? String(c[1].v) : "",
-          preco: c[2] ? parseFloat(String(c[2].v).replace(',', '.')) : 0,
+          preco: c[2] ? parseFloat(String(c[2].v)) : 0,
           url: c[3] ? String(c[3].v).trim() : ""
         };
-      }).filter(p => p.nome.length > 1 && p.url.startsWith('http'));
+      }).filter(p => p.nome !== "" && p.url.startsWith('http')); // REGRA: Nome e URL obrigatórios
 
       carregar(); 
     } catch (e) {
-      document.getElementById('lista').innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>Erro ao conectar com a planilha.</p>";
+      document.getElementById('lista').innerHTML = "<p style='grid-column:1/-1; text-align:center;'>Erro ao conectar com a planilha. Verifique a publicação.</p>";
     }
   }
 
   function carregar(filtroCat = 'todos') {
     const lista = document.getElementById('lista');
-    const dados = filtroCat === 'todos' ? produtos : produtos.filter(p => p.cat.toLowerCase() === filtroCat.toLowerCase());
+    const dados = filtroCat === 'todos' ? produtos : produtos.filter(p => p.cat === filtroCat);
     
     lista.innerHTML = dados.map(p => `
-      <div class="card" data-nome="${p.nome.toLowerCase()}">
+      <div class="card">
         <div class="img-box" onclick="abrirZoom('${p.url}')">
-          <img src="${p.url}" loading="lazy">
+          <img src="${p.url}">
         </div>
         <div class="info">
-          <span class="cat-tag">${p.cat}</span>
-          <div class="nome">${p.nome}</div>
+          <div class="nome"><b>${p.nome}</b></div>
           <div class="preco">R$ ${p.preco.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
-          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá Meirelles! Vi no catálogo o produto: ${p.nome}. Está disponível?" target="_blank" class="btn-whats">
-            <i class="fa-brands fa-whatsapp"></i> Tenho Interesse
+          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá! Quero saber sobre: ${p.nome}" target="_blank" class="btn-whats">
+            <i class="fa-brands fa-whatsapp"></i> Ver no WhatsApp
           </a>
         </div>
       </div>
@@ -151,13 +113,6 @@
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     carregar(cat);
-  }
-
-  function buscarTexto() {
-    const termo = document.getElementById('filtro').value.toLowerCase();
-    document.querySelectorAll('.card').forEach(card => {
-      card.style.display = card.dataset.nome.includes(termo) ? 'flex' : 'none';
-    });
   }
 
   window.onload = buscarDadosDoSheets;
