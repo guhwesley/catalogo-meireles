@@ -6,33 +6,29 @@
   <title>Catálogo - Crediário Meirelles</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    :root {
-      --primary: #1e3a52; 
-      --bg: #f1f5f9;
-      --text: #1e293b;
-      --whatsapp: #22c55e;
-    }
+    :root { --primary: #1e3a52; --bg: #f1f5f9; --text: #1e293b; --whatsapp: #22c55e; }
     body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
     header { background: linear-gradient(135deg, #1e3a52 0%, #2c4e6a 100%); padding: 30px 20px; text-align: center; color: white; }
     .logo { max-width: 200px; border-radius: 12px; margin-bottom: 10px; }
     .nav-categorias { background: white; padding: 15px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: center; gap: 10px; overflow-x: auto; border-bottom: 1px solid #e2e8f0; }
-    .cat-btn { padding: 8px 18px; border-radius: 50px; border: none; background: #f1f5f9; color: #64748b; cursor: pointer; font-weight: 600; white-space: nowrap; }
+    .cat-btn { padding: 8px 18px; border-radius: 50px; border: none; background: #f1f5f9; color: #64748b; cursor: pointer; font-weight: 600; white-space: nowrap; transition: 0.3s; }
     .cat-btn.active { background: var(--primary); color: white; }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     .search-box { margin-bottom: 30px; text-align: center; }
-    #filtro { width: 100%; max-width: 500px; padding: 12px 25px; border-radius: 50px; border: 2px solid #e2e8f0; outline: none; }
+    #filtro { width: 100%; max-width: 500px; padding: 12px 25px; border-radius: 50px; border: 2px solid #e2e8f0; outline: none; font-size: 16px; }
     .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
     .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
     .img-box { width: 100%; height: 250px; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-    .img-box img { width: 100%; height: 100%; object-fit: contain; padding: 5px; }
+    .img-box img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
     .info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
-    .cat-tag { font-size: 10px; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
-    .nome { font-size: 16px; font-weight: 600; margin: 5px 0 10px 0; height: 40px; overflow: hidden; }
-    .preco { font-size: 20px; color: var(--primary); font-weight: 800; margin-bottom: 15px; }
-    .btn-whats { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--whatsapp); color: white; padding: 12px; text-decoration: none; font-weight: 700; border-radius: 10px; }
+    .cat-tag { font-size: 10px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .nome { font-size: 16px; font-weight: 600; margin: 5px 0 10px 0; height: 42px; overflow: hidden; line-height: 1.3; }
+    .preco { font-size: 22px; color: var(--primary); font-weight: 800; margin-bottom: 15px; }
+    .btn-whats { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--whatsapp); color: white; padding: 12px; text-decoration: none; font-weight: 700; border-radius: 10px; transition: 0.3s; }
+    .btn-whats:hover { opacity: 0.9; transform: translateY(-2px); }
     .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
     .modal-content { max-width: 90%; max-height: 90%; border-radius: 10px; }
-    @media (max-width: 600px) { .grid-produtos { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; } .img-box { height: 180px; } }
+    @media (max-width: 600px) { .grid-produtos { grid-template-columns: 1fr 1fr; gap: 10px; } .img-box { height: 160px; } .nome { font-size: 14px; } .preco { font-size: 18px; } }
   </style>
 </head>
 <body>
@@ -54,10 +50,10 @@
 
 <div class="container">
   <div class="search-box">
-    <input type="text" id="filtro" placeholder="O que você procura?" onkeyup="buscarTexto()">
+    <input type="text" id="filtro" placeholder="O que você está procurando?" onkeyup="buscarTexto()">
   </div>
   <div class="grid-produtos" id="lista">
-    <p style="text-align:center; grid-column: 1/-1;">Carregando catálogo...</p>
+    <p style="text-align:center; grid-column: 1/-1;">Carregando produtos...</p>
   </div>
 </div>
 
@@ -69,8 +65,6 @@
   const WHATSAPP_CONTATO = "554888337779";
   const SHEET_ID = '16FzPEau-EH0E7P13Mq-CFVT0QZceQMLwTUSQ4aZXXf0';
   const SHEET_NAME = 'cadastro-produtos';
-  
-  // URL formatada para evitar erros de leitura
   const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
 
   let produtos = [];
@@ -79,34 +73,21 @@
     try {
       const response = await fetch(FULL_URL);
       const text = await response.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
       
-      // Limpeza robusta do JSON do Google
-      const start = text.indexOf('{');
-      const end = text.lastIndexOf('}') + 1;
-      const json = JSON.parse(text.substring(start, end));
-      
-      const rows = json.table.rows;
-      
-      produtos = rows.map(row => {
+      produtos = json.table.rows.map(row => {
         const c = row.c;
         return {
-          cat: c[0] ? String(c[0].v) : "",
+          cat: c[0] ? String(c[0].v) : "Geral",
           nome: c[1] ? String(c[1].v) : "",
           preco: c[2] ? parseFloat(String(c[2].v).replace(',', '.')) : 0,
           url: c[3] ? String(c[3].v).trim() : ""
         };
-      }).filter(p => p.nome.length > 1 && p.url.includes('http')); // REGRA: Nome válido e link de imagem real
+      }).filter(p => p.nome.length > 1 && p.url.startsWith('http'));
 
-      if(produtos.length === 0) throw new Error("Sem produtos");
       carregar(); 
     } catch (e) {
-      console.error(e);
-      document.getElementById('lista').innerHTML = `
-        <div style="text-align:center; grid-column: 1/-1; padding: 40px;">
-          <i class="fas fa-sync fa-spin fa-2x"></i>
-          <p>Sincronizando com a planilha...</p>
-          <small>Verifique se o nome da aba é exatamente: <b>${SHEET_NAME}</b></small>
-        </div>`;
+      document.getElementById('lista').innerHTML = "<p style='text-align:center; grid-column: 1/-1;'>Erro ao carregar catálogo. Verifique o nome da aba na planilha.</p>";
     }
   }
 
@@ -117,13 +98,13 @@
     lista.innerHTML = dados.map(p => `
       <div class="card" data-nome="${p.nome.toLowerCase()}">
         <div class="img-box" onclick="abrirZoom('${p.url}')">
-          <img src="${p.url}" onerror="this.parentElement.style.display='none'">
+          <img src="${p.url}">
         </div>
         <div class="info">
           <span class="cat-tag">${p.cat}</span>
           <div class="nome">${p.nome}</div>
           <div class="preco">R$ ${p.preco.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
-          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá Meirelles! Vi no catálogo o produto: ${p.nome}. Está disponível?" target="_blank" class="btn-whats">
+          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá! Vi no catálogo: ${p.nome}. Está disponível?" target="_blank" class="btn-whats">
             <i class="fa-brands fa-whatsapp"></i> Tenho Interesse
           </a>
         </div>
