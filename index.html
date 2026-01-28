@@ -1,5 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo - Crediário Meirelles</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1e3a52; 
+      --bg: #f1f5f9;
+      --text: #1e293b;
+      --whatsapp: #22c55e;
+    }
+
+    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
+
+    header {
+      background: linear-gradient(135deg, #1e3a52 0%, #2c4e6a 100%);
+      padding: 30px 20px; text-align: center; color: white;
+    }
+
+    .logo { max-width: 200px; border-radius: 12px; margin-bottom: 10px; }
+
+    .nav-categorias {
+      background: white; padding: 15px; position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: center; gap: 10px; overflow-x: auto; border-bottom: 1px solid #e2e8f0;
+    }
+
+    .cat-btn {
+      padding: 8px 18px; border-radius: 50px; border: none; background: #f1f5f9;
+      color: #64748b; cursor: pointer; font-weight: 600; white-space: nowrap;
+    }
+
+    .cat-btn.active { background: var(--primary); color: white; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+    .search-box { margin-bottom: 30px; text-align: center; }
+    #filtro { width: 100%; max-width: 500px; padding: 12px 25px; border-radius: 50px; border: 2px solid #e2e8f0; outline: none; }
+
+    .grid-produtos { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+      gap: 20px; 
+    }
+
+    .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+
+    .img-box { width: 100%; height: 250px; background: white; display: flex; align-items: center; justify-content: center; }
+    .img-box img { width: 100%; height: 100%; object-fit: contain; padding: 5px; }
+
+    .info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+    .cat-tag { font-size: 10px; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
+    .nome { font-size: 16px; font-weight: 600; margin: 5px 0 10px 0; height: 40px; overflow: hidden; }
+    .preco { font-size: 20px; color: var(--primary); font-weight: 800; margin-bottom: 15px; }
+
+    .btn-whats {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--whatsapp); color: white; padding: 12px; text-decoration: none; 
+      font-weight: 700; border-radius: 10px;
+    }
+
+    .modal {
+      display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9); align-items: center; justify-content: center;
+    }
+    .modal-content { max-width: 90%; max-height: 90%; border-radius: 10px; }
+
+    @media (max-width: 600px) {
+      .grid-produtos { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+      .img-box { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://i.postimg.cc/N0D8vD8T/crediariomeirelles.jpg" alt="Logo" class="logo">
+  <div>QUALIDADE E CONFIANÇA PARA SUA CASA</div>
+</header>
+
+<div class="nav-categorias">
+  <button class="cat-btn active" onclick="filtrarCategoria('todos', this)">Todos</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Cozinha', this)">Cozinha</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Tapetes', this)">Tapetes</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Cama/Banho', this)">Cama/Banho</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Cortinas', this)">Cortinas</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Móveis', this)">Móveis</button>
+  <button class="cat-btn" onclick="filtrarCategoria('Lavanderia', this)">Lavanderia</button>
+</div>
+
+<div class="container">
+  <div class="search-box">
+    <input type="text" id="filtro" placeholder="Pesquisar produto..." onkeyup="buscarTexto()">
+  </div>
+  <div class="grid-produtos" id="lista"></div>
+</div>
+
+<div id="imageModal" class="modal" onclick="this.style.display='none'">
+  <img class="modal-content" id="imgAmpliada">
+</div>
+
 <script>
-  // CONFIGURAÇÕES GERAIS
   const WHATSAPP_CONTATO = "554888337779";
   const SHEET_ID = '16FzPEau-EH0E7P13Mq-CFVT0QZceQMLwTUSQ4aZXXf0'; 
   const SHEET_NAME = 'cadastro-produtos';
@@ -7,61 +109,53 @@
 
   let produtos = [];
 
-  // BUSCAR DADOS DA PLANILHA
   async function buscarDadosDoSheets() {
     try {
       const response = await fetch(FULL_URL);
       const text = await response.text();
-      // Remove o lixo que o Google coloca antes do JSON
-      const json = JSON.parse(text.substr(47).slice(0, -2));
+      const json = JSON.parse(text.substring(47).slice(0, -2));
       
-      const rows = json.table.rows;
-      
-      // Mapeia as colunas: A (0)=Cat, B (1)=Nome, C (2)=Valor, D (3)=URL
-      produtos = rows.map(row => ({
-        cat: row.c[0] ? row.c[0].v : 'Sem Categoria',
-        nome: row.c[1] ? row.c[1].v : 'Produto sem nome',
-        preco: row.c[2] ? parseFloat(row.c[2].v) : 0,
-        url: row.c[3] ? row.c[3].v : ''
-      }));
+      produtos = json.table.rows
+        .map(row => {
+          const getVal = (i) => (row.c[i] && row.c[i].v !== null) ? row.c[i].v : "";
+          return {
+            cat: String(getVal(0)),
+            nome: String(getVal(1)),
+            preco: parseFloat(String(getVal(2)).replace(',', '.')) || 0,
+            url: String(getVal(3)).trim()
+          };
+        })
+        // REGRA: Só entra no catálogo se tiver NOME e URL da imagem
+        .filter(p => p.nome.length > 2 && p.url.startsWith('http'));
 
       carregar(); 
-    } catch (error) {
-      console.error("Erro ao carregar:", error);
-      document.getElementById('lista').innerHTML = "<p style='text-align:center'>Erro ao carregar os dados da planilha.</p>";
+    } catch (e) {
+      document.getElementById('lista').innerHTML = "<p>Erro ao carregar produtos. Verifique a publicação da planilha.</p>";
     }
   }
 
-  // RENDERIZAR PRODUTOS NA TELA
   function carregar(filtroCat = 'todos') {
     const lista = document.getElementById('lista');
     const dados = filtroCat === 'todos' ? produtos : produtos.filter(p => p.cat === filtroCat);
     
-    lista.innerHTML = dados.map(p => {
-      const msgWhats = encodeURIComponent(`Olá Meirelles! Vi no catálogo: ${p.nome} (R$ ${p.preco.toFixed(2).replace('.',',')}). Está disponível?`);
-      return `
-        <div class="card" data-nome="${p.nome.toLowerCase()}">
-          <div class="img-box" onclick="abrirZoom('${p.url}')">
-            ${p.url 
-              ? `<img src="${p.url}" loading="lazy" onload="this.style.opacity=1" onerror="this.src='https://placehold.co/400x400?text=Imagem+Indisponível'">` 
-              : `<div style="text-align:center;color:#94a3b8;"><i class="fa-solid fa-camera fa-2x"></i><br>EM BREVE</div>`}
-          </div>
-          <div class="info">
-            <span class="cat-tag">${p.cat}</span>
-            <div class="nome">${p.nome}</div>
-            <div class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</div>
-            <a href="https://wa.me/${WHATSAPP_CONTATO}?text=${msgWhats}" target="_blank" class="btn-whats">
-              <i class="fa-brands fa-whatsapp"></i> Tenho Interesse
-            </a>
-          </div>
+    lista.innerHTML = dados.map(p => `
+      <div class="card" data-nome="${p.nome.toLowerCase()}">
+        <div class="img-box" onclick="abrirZoom('${p.url}')">
+          <img src="${p.url}">
         </div>
-      `;
-    }).join('');
+        <div class="info">
+          <span class="cat-tag">${p.cat}</span>
+          <div class="nome">${p.nome}</div>
+          <div class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</div>
+          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá! Tenho interesse em: ${p.nome}" target="_blank" class="btn-whats">
+            <i class="fa-brands fa-whatsapp"></i> Tenho Interesse
+          </a>
+        </div>
+      </div>
+    `).join('');
   }
 
-  // FUNÇÕES DE INTERAÇÃO
   function abrirZoom(url) {
-    if(!url) return;
     document.getElementById('imageModal').style.display = "flex";
     document.getElementById('imgAmpliada').src = url;
   }
@@ -75,10 +169,11 @@
   function buscarTexto() {
     const termo = document.getElementById('filtro').value.toLowerCase();
     document.querySelectorAll('.card').forEach(card => {
-      const nome = card.getAttribute('data-nome');
-      card.style.display = nome.includes(termo) ? 'flex' : 'none';
+      card.style.display = card.dataset.nome.includes(termo) ? 'flex' : 'none';
     });
   }
 
-  window.onload = () => buscarDadosDoSheets();
+  window.onload = buscarDadosDoSheets;
 </script>
+</body>
+</html>
