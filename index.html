@@ -44,7 +44,7 @@
         text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
-    /* LINKS SOCIAIS COM ESTILO GRADIENTE */
+    /* LINKS SOCIAIS COM TEXTO PRETO NEGRITO */
     .header-socials {
         display: flex;
         justify-content: center;
@@ -55,23 +55,24 @@
     .header-social-item {
         text-decoration: none;
         font-size: 1rem;
-        font-weight: 800;
+        /* Texto em Preto e Super Negrito */
+        font-weight: 900; 
+        color: #000000 !important; 
         display: flex;
         align-items: center;
         gap: 10px;
         padding: 12px 25px;
         border-radius: 50px;
-        color: white !important;
         transition: 0.3s;
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
-    /* Estilo Real Instagram */
+    /* Estilo Real Instagram Gradiente */
     .insta-link { 
         background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
     }
 
-    /* Estilo Real WhatsApp */
+    /* Estilo Real WhatsApp Verde */
     .whats-link { 
         background-color: var(--whatsapp);
     }
@@ -80,6 +81,11 @@
         transform: translateY(-3px); 
         filter: brightness(1.1);
         box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Ícones pretos para combinar com o texto */
+    .header-social-item i {
+        color: #000000;
     }
 
     /* BUSCA UNIFICADA */
