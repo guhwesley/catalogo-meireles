@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo Oficial - Crediário Meirelles</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root { 
         --primary: #1e3a52; 
         --bg: #f8fafc; 
         --text: #1a202c; 
         --whatsapp: #25d366; 
-        --gold: #d4af37; 
-        --gold-light: #f1d592;
+        /* TONS EXTRAÍDOS DO NOME MEIRELLES NA LOGO */
+        --gold: #dcc79b; 
+        --gold-light: #e5d5b0; 
         --white: #ffffff;
     }
 
@@ -21,7 +22,7 @@
     
     header { 
         background: linear-gradient(135deg, #1e3a52 0%, #0f172a 100%); 
-        padding: 50px 20px; 
+        padding: 60px 20px; 
         text-align: center; 
         color: white; 
     }
@@ -32,48 +33,52 @@
         border-radius: 30px; 
         margin-bottom: 25px; 
         box-shadow: 0 20px 40px rgba(0,0,0,0.45); 
-        border: 2px solid var(--gold);
+        border: 2px solid var(--gold-light);
     }
 
     .tagline { 
-        font-size: 1rem; 
+        font-size: 1.1rem; 
         font-weight: 800; 
-        margin-bottom: 30px; 
+        margin-bottom: 25px; 
         text-transform: uppercase; 
-        letter-spacing: 2px;
-        color: #fff;
+        letter-spacing: 1.5px;
+        color: var(--gold-light);
     }
 
-    /* BOTÕES SOCIAIS SÓ TEXTO DOURADO SEM FUNDO */
-    .header-socials { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+    .header-socials { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
     .header-social-item {
         text-decoration: none;
-        font-size: 1.1rem;
-        font-weight: 900; /* Negrito máximo */
-        color: var(--gold) !important; 
+        font-size: 0.95rem;
+        font-weight: 900;
+        color: #000000 !important; 
         display: flex;
         align-items: center;
         gap: 10px;
-        padding: 5px 0;
-        transition: 0.3s ease;
+        padding: 12px 25px;
+        border-radius: 12px;
+        /* FUNDO NO TOM DAS LETRAS DA LOGO */
+        background: linear-gradient(145deg, var(--gold-light), var(--gold));
+        border: 1px solid #c5b28a;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(229, 213, 176, 0.3);
     }
 
     .header-social-item:hover {
-        color: var(--gold-light) !important;
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        filter: brightness(1.05);
+        box-shadow: 0 8px 20px rgba(229, 213, 176, 0.5);
     }
 
-    .header-social-item i { font-size: 1.3rem; }
+    .header-social-item i { color: #000000; font-size: 1.2rem; }
 
-    /* BARRA DE BUSCA */
     .search-section {
         background: var(--white);
         padding: 20px;
         position: sticky;
         top: 0;
         z-index: 1000;
-        border-bottom: 1px solid var(--gold);
+        border-bottom: 2px solid var(--gold-light);
         display: flex;
         justify-content: center;
     }
@@ -84,15 +89,14 @@
         width: 100%;
         max-width: 700px;
         background: var(--white);
-        border: 2px solid var(--gold);
+        border: 2px solid var(--gold-light);
         border-radius: 50px;
         padding: 5px 15px;
     }
 
-    .search-select { padding: 10px; border: none; font-weight: 800; outline: none; border-right: 1px solid var(--gold); background: transparent; }
+    .search-select { padding: 10px; border: none; font-weight: 800; outline: none; border-right: 1px solid var(--gold-light); background: transparent; }
     .search-input { flex-grow: 1; padding: 10px; border: none; outline: none; font-size: 16px; font-weight: 600; }
 
-    /* GRID E PRODUTOS */
     .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
     .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
     
@@ -101,6 +105,7 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; 
         border: 1px solid #f1f5f9; transition: 0.3s;
     }
+    .card:hover { border-color: var(--gold-light); }
 
     .img-box { 
         width: 100%; height: 280px; display: flex; align-items: center; 
@@ -118,23 +123,21 @@
         text-decoration: none; font-weight: 800; border-radius: 16px; 
     }
 
-    /* MODAL DE IMAGEM AMPLIADA */
     .modal {
         display: none;
         position: fixed;
         z-index: 3000;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.95);
+        background: rgba(0,0,0,0.9);
         align-items: center; justify-content: center;
         cursor: zoom-out;
     }
-    .modal-content { max-width: 90%; max-height: 90%; border-radius: 10px; border: 2px solid var(--gold); }
+    .modal-content { max-width: 90%; max-height: 90%; border-radius: 10px; border: 2px solid var(--gold-light); }
 
     @media (max-width: 600px) { 
         .grid-produtos { grid-template-columns: 1fr 1fr; gap: 12px; }
-        .img-box { height: 180px; }
+        .img-box { height: 200px; }
         .logo { width: 220px; }
-        .header-social-item { font-size: 0.9rem; gap: 6px; }
     }
   </style>
 </head>
@@ -149,7 +152,7 @@
         <i class="fa-brands fa-instagram"></i> @crediariomeirelles
     </a>
     <a href="https://wa.me/554888337779" target="_blank" class="header-social-item">
-        <i class="fa-brands fa-whatsapp"></i> (48) 98833-7779
+        <i class="fa-brands fa-whatsapp"></i> (48) 8833-7779
     </a>
   </div>
 </header>
