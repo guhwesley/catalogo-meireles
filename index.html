@@ -1,270 +1,338 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Oficial - Crediário Meirelles</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root { 
-        --primary: #1e3a52; 
-        --bg: #f8fafc; 
-        --text: #1a202c; 
-        --whatsapp: #25d366; 
-        --white: #ffffff;
-        --border: #e2e8f0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Oficial - Crediário Meirelles</title>
 
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
-    
-    header { 
-        background: linear-gradient(135deg, #1e3a52 0%, #0f172a 100%); 
-        padding: 60px 20px; 
-        text-align: center; 
-        color: white; 
-    }
-    
-    /* LOGO GRANDE (300px) */
-    .logo { 
-        width: 300px; 
-        max-width: 95%; 
-        border-radius: 30px; 
-        margin-bottom: 25px; 
-        box-shadow: 0 20px 40px rgba(0,0,0,0.45); 
-        border: 2px solid rgba(255,255,255,0.2);
-    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    .tagline { 
-        font-size: 1.1rem; 
-        font-weight: 800; 
-        margin-bottom: 25px; 
-        text-transform: uppercase; 
-        letter-spacing: 1.5px;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
+<style>
+:root{
+ --primary:#1e3a52;
+ --bg:#f8fafc;
+ --text:#0f172a;
+ --border:#e5e7eb;
+ --white:#fff;
+ --whatsapp:#25d366;
+}
 
-    /* BOTÕES SOCIAIS SIMPLIFICADOS E CLEAN */
-    .header-socials {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        flex-wrap: wrap;
-    }
+*{box-sizing:border-box}
 
-    .header-social-item {
-        text-decoration: none;
-        font-size: 0.95rem;
-        font-weight: 900; /* Texto preto negrito solicitado */
-        color: #000000 !important; 
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 22px;
-        border-radius: 12px;
-        background: #ffffff; /* Fundo branco para não poluir */
-        border: 1px solid rgba(255,255,255,0.3);
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+body{
+ margin:0;
+ font-family:'Inter',sans-serif;
+ background:var(--bg);
+ color:var(--text);
+}
 
-    .header-social-item:hover {
-        transform: translateY(-2px);
-        background: #f1f5f9;
-    }
+/* HEADER */
+header{
+ background:linear-gradient(180deg,#0f2235,#0b1a2a);
+ padding:55px 20px;
+ text-align:center;
+ color:white;
+}
 
-    /* Cores apenas nos ícones */
-    .insta-link i { color: #e1306c; }
-    .whats-link i { color: #25d366; }
+.logo{
+ width:260px;
+ border-radius:26px;
+ margin-bottom:20px;
+ box-shadow:0 14px 35px rgba(0,0,0,.35);
+}
 
-    /* BUSCA UNIFICADA */
-    .search-section {
-        background: var(--white);
-        padding: 20px;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        justify-content: center;
-    }
+.tagline{
+ font-weight:600;
+ letter-spacing:.5px;
+ opacity:.9;
+ margin-bottom:22px;
+}
 
-    .search-wrapper {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        max-width: 700px;
-        background: var(--white);
-        border: 1px solid var(--border);
-        border-radius: 50px;
-        padding: 5px 15px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
+/* SOCIAL */
+.header-socials{
+ display:flex;
+ justify-content:center;
+ gap:12px;
+}
 
-    .search-select {
-        padding: 10px;
-        border: none;
-        background: transparent;
-        font-weight: 700;
-        outline: none;
-        cursor: pointer;
-        min-width: 120px;
-        border-right: 1px solid var(--border);
-    }
+.header-social-item{
+ background:#fff;
+ color:#000;
+ padding:11px 20px;
+ border-radius:14px;
+ text-decoration:none;
+ font-weight:600;
+ display:flex;
+ align-items:center;
+ gap:8px;
+ box-shadow:0 6px 18px rgba(0,0,0,.15);
+ transition:.25s;
+}
 
-    .search-input { flex-grow: 1; padding: 10px; border: none; background: transparent; outline: none; font-size: 16px; }
+.header-social-item:hover{
+ transform:translateY(-3px);
+ box-shadow:0 10px 28px rgba(0,0,0,.25);
+}
 
-    /* GRID E PRODUTOS */
-    .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-    .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
-    
-    .card { 
-        background: var(--white); border-radius: 24px; overflow: hidden; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; 
-        border: 1px solid #f1f5f9; transition: 0.3s;
-    }
+/* SEARCH */
+.search-section{
+ background:#fff;
+ padding:18px;
+ position:sticky;
+ top:0;
+ z-index:1000;
+ border-bottom:1px solid var(--border);
+ display:flex;
+ justify-content:center;
+}
 
-    .img-box { 
-        width: 100%; height: 280px; display: flex; align-items: center; 
-        justify-content: center; background: #fff; padding: 15px; 
-    }
-    .img-box img { width: 100%; height: 100%; object-fit: contain; }
+.search-wrapper{
+ width:100%;
+ max-width:720px;
+ display:flex;
+ align-items:center;
+ background:#fff;
+ border-radius:22px;
+ padding:6px 14px;
+ box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
 
-    .info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-    .nome { font-size: 17px; min-height: 48px; margin-bottom: 10px; font-weight: 700; color: #334155; }
-    .preco { font-size: 26px; color: var(--primary); font-weight: 900; margin-bottom: 15px; }
+.search-select{
+ border:none;
+ background:transparent;
+ padding:10px;
+ font-weight:600;
+ outline:none;
+ border-right:1px solid var(--border);
+}
 
-    .btn-whats { 
-        display: flex; align-items: center; justify-content: center; gap: 10px; 
-        background: var(--whatsapp); color: white; padding: 15px; 
-        text-decoration: none; font-weight: 800; border-radius: 16px; 
-    }
+.search-input{
+ flex:1;
+ border:none;
+ padding:10px;
+ font-size:15px;
+ outline:none;
+}
 
-    .wa-float {
-        position: fixed; bottom: 30px; right: 30px; background: var(--whatsapp); color: white; 
-        width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; 
-        justify-content: center; font-size: 32px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 2000;
-    }
+/* GRID */
+.container{
+ max-width:1250px;
+ margin:35px auto;
+ padding:0 20px;
+}
 
-    @media (max-width: 600px) { 
-        .grid-produtos { grid-template-columns: 1fr 1fr; gap: 12px; }
-        .img-box { height: 200px; }
-        .logo { width: 220px; }
-    }
-  </style>
+.grid-produtos{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+ gap:26px;
+}
+
+/* CARD */
+.card{
+ background:#fff;
+ border-radius:22px;
+ overflow:hidden;
+ border:1px solid #f1f5f9;
+ transition:.3s;
+ animation:fadeUp .4s ease;
+}
+
+.card:hover{
+ transform:translateY(-6px);
+ box-shadow:0 18px 35px rgba(0,0,0,.12);
+}
+
+.img-box{
+ height:260px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:16px;
+}
+
+.img-box img{
+ width:100%;
+ height:100%;
+ object-fit:contain;
+}
+
+.info{
+ padding:20px;
+ display:flex;
+ flex-direction:column;
+ height:100%;
+}
+
+.nome{
+ font-weight:600;
+ font-size:16px;
+ line-height:1.3;
+ min-height:44px;
+ margin-bottom:10px;
+}
+
+.preco{
+ font-size:24px;
+ font-weight:800;
+ color:var(--primary);
+ margin-bottom:14px;
+}
+
+.btn-whats{
+ margin-top:auto;
+ background:var(--whatsapp);
+ color:#fff;
+ text-decoration:none;
+ padding:13px;
+ border-radius:14px;
+ font-weight:700;
+ display:flex;
+ justify-content:center;
+ gap:8px;
+ transition:.25s;
+}
+
+.btn-whats:hover{
+ filter:brightness(.95);
+ transform:translateY(-2px);
+}
+
+/* FLOAT */
+.wa-float{
+ position:fixed;
+ right:26px;
+ bottom:26px;
+ width:60px;
+ height:60px;
+ background:var(--whatsapp);
+ color:white;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:30px;
+ box-shadow:0 10px 25px rgba(37,211,102,.45);
+ animation:pulse 2s infinite;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes pulse{
+ 0%{transform:scale(1)}
+ 50%{transform:scale(1.05)}
+ 100%{transform:scale(1)}
+}
+
+@media(max-width:600px){
+ .grid-produtos{grid-template-columns:1fr 1fr;gap:14px}
+ .logo{width:210px}
+ .img-box{height:200px}
+}
+</style>
 </head>
+
 <body>
 
 <header>
-  <img src="https://i.postimg.cc/N0D8vD8T/crediariomeirelles.jpg" alt="Crediário Meirelles" class="logo">
-  <div class="tagline">QUALIDADE E CONFIANÇA PARA SUA CASA</div>
-  <div class="header-socials">
-    <a href="https://www.instagram.com/crediariomeirelles" target="_blank" class="header-social-item insta-link">
-        <i class="fa-brands fa-instagram"></i> Instagram
-    </a>
-    <a href="https://wa.me/554888337779" target="_blank" class="header-social-item whats-link">
-        <i class="fa-brands fa-whatsapp"></i> WhatsApp
-    </a>
-  </div>
+<img src="https://i.postimg.cc/N0D8vD8T/crediariomeirelles.jpg" class="logo">
+<div class="tagline">QUALIDADE E CONFIANÇA PARA SUA CASA</div>
+
+<div class="header-socials">
+<a class="header-social-item" href="https://www.instagram.com/crediariomeirelles" target="_blank">
+<i class="fa-brands fa-instagram" style="color:#e1306c"></i> Instagram
+</a>
+<a class="header-social-item" href="https://wa.me/554888337779" target="_blank">
+<i class="fa-brands fa-whatsapp" style="color:#25d366"></i> WhatsApp
+</a>
+</div>
 </header>
 
 <div class="search-section">
-    <div class="search-wrapper">
-        <select id="selectCategorias" class="search-select" onchange="executarBusca()">
-            <option value="todos">Categorias</option>
-        </select>
-        <input type="text" id="inputBusca" class="search-input" placeholder="O que você está procurando?" onkeyup="executarBusca()">
-        <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
-    </div>
+<div class="search-wrapper">
+<select id="selectCategorias" class="search-select" onchange="executarBusca()">
+<option value="todos">Categorias</option>
+</select>
+<input id="inputBusca" class="search-input" placeholder="O que você está procurando?" onkeyup="executarBusca()">
+<i class="fa-solid fa-magnifying-glass" style="color:#94a3b8"></i>
+</div>
 </div>
 
 <div class="container">
-    <div class="grid-produtos" id="lista">
-        <p style="grid-column: 1/-1; text-align: center; padding: 50px;">Carregando ofertas...</p>
-    </div>
+<div class="grid-produtos" id="lista">
+<p style="grid-column:1/-1;text-align:center;padding:50px">Carregando...</p>
+</div>
 </div>
 
 <a href="https://wa.me/554888337779" class="wa-float" target="_blank">
-    <i class="fa-brands fa-whatsapp"></i>
+<i class="fa-brands fa-whatsapp"></i>
 </a>
 
 <script>
-  const WHATSAPP_CONTATO = "554888337779";
-  const SHEET_ID = '16FzPEau-EH0E7P13Mq-CFVT0QZceQMLwTUSQ4aZXXf0';
-  const GID = '740385436'; 
-  const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&cachebust=${Date.now()}`;
+const WHATSAPP_CONTATO="554888337779";
+const SHEET_ID='16FzPEau-EH0E7P13Mq-CFVT0QZceQMLwTUSQ4aZXXf0';
+const GID='740385436';
+const FULL_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&cachebust=${Date.now()}`;
 
-  let produtos = [];
+let produtos=[];
 
-  async function buscarDadosDoSheets() {
-    try {
-      const response = await fetch(FULL_URL);
-      const text = await response.text();
-      const jsonText = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
-      const json = JSON.parse(jsonText);
-      
-      produtos = json.table.rows.map(row => {
-        const c = row.c;
-        return {
-          cat: c[0] && c[0].v ? String(c[0].v) : "Geral",
-          nome: c[1] && c[1].v ? String(c[1].v) : "",
-          preco: c[2] && c[2].v ? parseFloat(String(c[2].v).replace(',', '.')) : 0,
-          url: c[3] && c[3].v ? String(c[3].v).trim() : ""
-        };
-      }).filter(p => p.nome.length > 1 && p.url.startsWith('http'));
+async function buscarDadosDoSheets(){
+ const r=await fetch(FULL_URL);
+ const t=await r.text();
+ const j=JSON.parse(t.substring(t.indexOf("{"),t.lastIndexOf("}")+1));
+ produtos=j.table.rows.map(row=>{
+ const c=row.c;
+ return{
+ cat:c[0]?.v||"Geral",
+ nome:c[1]?.v||"",
+ preco:parseFloat(String(c[2]?.v||0).replace(',','.')),
+ url:c[3]?.v||""
+ }
+ }).filter(p=>p.nome&&p.url.startsWith("http"));
 
-      popularSelect();
-      renderizar(produtos); 
-    } catch (e) {
-      document.getElementById('lista').innerHTML = "<p>Erro ao conectar com a planilha.</p>";
-    }
-  }
+ popularSelect();
+ renderizar(produtos);
+}
 
-  function popularSelect() {
-    const select = document.getElementById('selectCategorias');
-    const categoriasUnicas = [...new Set(produtos.map(p => p.cat))].sort();
-    categoriasUnicas.forEach(cat => {
-      const option = document.createElement('option');
-      option.value = cat;
-      option.textContent = cat;
-      select.appendChild(option);
-    });
-  }
+function popularSelect(){
+ const s=document.getElementById("selectCategorias");
+ [...new Set(produtos.map(p=>p.cat))].sort().forEach(cat=>{
+ const o=document.createElement("option");
+ o.value=cat;o.textContent=cat;
+ s.appendChild(o);
+ });
+}
 
-  function executarBusca() {
-    const texto = document.getElementById('inputBusca').value.toLowerCase();
-    const categoria = document.getElementById('selectCategorias').value.toLowerCase();
-    const filtrados = produtos.filter(p => {
-      const matchTexto = p.nome.toLowerCase().includes(texto);
-      const matchCat = (categoria === 'todos' || p.cat.toLowerCase() === categoria);
-      return matchTexto && matchCat;
-    });
-    renderizar(filtrados);
-  }
+function executarBusca(){
+ const t=inputBusca.value.toLowerCase();
+ const c=selectCategorias.value.toLowerCase();
+ renderizar(produtos.filter(p=>
+ p.nome.toLowerCase().includes(t) &&
+ (c==="todos"||p.cat.toLowerCase()===c)
+ ));
+}
 
-  function renderizar(dados) {
-    const lista = document.getElementById('lista');
-    if(dados.length === 0) {
-        lista.innerHTML = "<p style='grid-column:1/-1; text-align:center; padding:50px;'>Nenhum item encontrado.</p>";
-        return;
-    }
-    lista.innerHTML = dados.map(p => `
-      <div class="card">
-        <div class="img-box">
-          <img src="${p.url}" alt="${p.nome}" loading="lazy">
-        </div>
-        <div class="info">
-          <div class="nome">${p.nome}</div>
-          <div class="preco">R$ ${p.preco.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
-          <a href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá Meirelles! Vi no catálogo: *${p.nome}*." target="_blank" class="btn-whats">
-            <i class="fa-brands fa-whatsapp"></i> Tenho Interesse
-          </a>
-        </div>
-      </div>
-    `).join('');
-  }
+function renderizar(dados){
+ lista.innerHTML=dados.map(p=>`
+ <div class="card">
+  <div class="img-box"><img src="${p.url}"></div>
+  <div class="info">
+   <div class="nome">${p.nome}</div>
+   <div class="preco">R$ ${p.preco.toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>
+   <a class="btn-whats" href="https://wa.me/${WHATSAPP_CONTATO}?text=Olá! Vi no catálogo: *${p.nome}*">
+   <i class="fa-brands fa-whatsapp"></i> Tenho interesse
+   </a>
+  </div>
+ </div>
+ `).join("");
+}
 
-  window.onload = buscarDadosDoSheets;
+window.onload=buscarDadosDoSheets;
 </script>
+
 </body>
 </html>
