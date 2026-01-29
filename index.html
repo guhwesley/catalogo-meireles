@@ -25,21 +25,13 @@
         color: white; 
     }
     .logo { 
-    width: 200px; /* Aumentamos um pouco */
-    height: auto;
-    border-radius: 20px; 
-    margin-bottom: 15px; 
-    /* Sombra para dar profundidade e destacar do fundo azul */
-    box-shadow: 0 15px 30px rgba(0,0,0,0.4); 
-    /* Uma borda sutil para separar as cores */
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease;
-}
+        width: 180px; 
+        border-radius: 20px; 
+        margin-bottom: 10px; 
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+    }
 
-.logo:hover {
-    transform: scale(1.05); /* Efeito interativo ao passar o mouse */
-}
-    /* BARRA DE PESQUISA UNIFICADA (Estilo solicitado) */
+    /* BARRA DE PESQUISA UNIFICADA */
     .search-section {
         background: var(--white);
         padding: 20px;
@@ -61,12 +53,6 @@
         border-radius: 50px;
         padding: 5px 15px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        transition: 0.3s;
-    }
-
-    .search-wrapper:focus-within {
-        border-color: var(--primary);
-        box-shadow: 0 4px 20px rgba(30, 58, 82, 0.15);
     }
 
     .search-select {
@@ -74,7 +60,6 @@
         border: none;
         background: transparent;
         font-weight: 700;
-        color: var(--text);
         outline: none;
         cursor: pointer;
         min-width: 120px;
@@ -91,31 +76,60 @@
         font-size: 16px;
     }
 
-    .search-icon { color: #94a3b8; font-size: 18px; margin-left: 10px; }
-
-    /* GRID DE PRODUTOS */
+    /* PADRONIZAÇÃO DAS IMAGENS */
     .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
     .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
     
     .card { 
-        background: var(--white); border-radius: 24px; overflow: hidden; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; 
-        transition: 0.3s; border: 1px solid #f1f5f9;
+        background: var(--white); 
+        border-radius: 24px; 
+        overflow: hidden; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+        display: flex; 
+        flex-direction: column; 
+        border: 1px solid #f1f5f9;
     }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
 
-    .img-box { width: 100%; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; background: #fff; padding: 15px; }
-    .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    /* Caixa da imagem com tamanho fixo */
+    .img-box { 
+        width: 100%; 
+        height: 250px; /* Altura fixa para padronizar */
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        background: #fff; 
+        overflow: hidden;
+        padding: 10px;
+    }
+
+    /* Ajuste da imagem para preencher sem distorcer */
+    .img-box img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: contain; /* Garante que a imagem inteira apareça sem cortes */
+        transition: 0.3s;
+    }
+
+    .card:hover .img-box img { transform: scale(1.05); }
 
     .info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
     .nome { font-size: 16px; min-height: 45px; margin-bottom: 10px; font-weight: 700; color: #334155; }
     .preco { font-size: 24px; color: var(--primary); font-weight: 900; margin-bottom: 15px; }
 
     .btn-whats { 
-        display: flex; align-items: center; justify-content: center; gap: 10px; 
-        background: var(--whatsapp); color: white; padding: 14px; 
-        text-decoration: none; font-weight: 800; border-radius: 15px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        gap: 10px; 
+        background: var(--whatsapp); 
+        color: white; 
+        padding: 14px; 
+        text-decoration: none; 
+        font-weight: 800; 
+        border-radius: 15px; 
+        transition: 0.3s;
     }
+    .btn-whats:hover { filter: brightness(1.1); }
 
     .wa-float {
         position: fixed; bottom: 25px; right: 25px; background: var(--whatsapp); color: white; 
@@ -125,7 +139,7 @@
 
     @media (max-width: 600px) { 
         .grid-produtos { grid-template-columns: 1fr 1fr; gap: 12px; }
-        .search-select { min-width: 100px; font-size: 14px; }
+        .img-box { height: 180px; } /* Altura menor para celulares */
     }
   </style>
 </head>
@@ -142,14 +156,13 @@
             <option value="todos">Categorias</option>
         </select>
         <input type="text" id="inputBusca" class="search-input" placeholder="O que você está procurando?" onkeyup="executarBusca()">
-        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
     </div>
 </div>
 
 <div class="container">
-    <h2 style="text-align: center; color: var(--primary); margin-bottom: 30px;">Catálogo Oficial Crediário Meirelles</h2>
     <div class="grid-produtos" id="lista">
-        <p style="grid-column: 1/-1; text-align: center; padding: 50px;">Carregando ofertas...</p>
+        <p style="grid-column: 1/-1; text-align: center; padding: 50px;">Carregando catálogo...</p>
     </div>
 </div>
 
@@ -223,7 +236,7 @@
     lista.innerHTML = dados.map(p => `
       <div class="card">
         <div class="img-box">
-          <img src="${p.url}" loading="lazy">
+          <img src="${p.url}" alt="${p.nome}" loading="lazy">
         </div>
         <div class="info">
           <div class="nome">${p.nome}</div>
@@ -240,4 +253,3 @@
 </script>
 </body>
 </html>
-
