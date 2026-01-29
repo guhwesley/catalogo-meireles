@@ -5,86 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo Oficial - Crediário Meirelles</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&display=swap" rel="stylesheet">
   <style>
     :root { 
         --primary: #1e3a52; 
         --bg: #f8fafc; 
         --text: #1a202c; 
         --whatsapp: #25d366; 
+        --gold: #d4af37; 
+        --gold-light: #f1d592;
         --white: #ffffff;
-        --border: #e2e8f0;
     }
 
     body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
     
     header { 
         background: linear-gradient(135deg, #1e3a52 0%, #0f172a 100%); 
-        padding: 60px 20px; 
+        padding: 50px 20px; 
         text-align: center; 
         color: white; 
     }
     
-    /* LOGO GRANDE (300px) */
     .logo { 
         width: 300px; 
         max-width: 95%; 
         border-radius: 30px; 
         margin-bottom: 25px; 
         box-shadow: 0 20px 40px rgba(0,0,0,0.45); 
-        border: 2px solid rgba(255,255,255,0.2);
+        border: 2px solid var(--gold);
     }
 
     .tagline { 
-        font-size: 1.1rem; 
+        font-size: 1rem; 
         font-weight: 800; 
-        margin-bottom: 25px; 
+        margin-bottom: 30px; 
         text-transform: uppercase; 
-        letter-spacing: 1.5px;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        letter-spacing: 2px;
+        color: #fff;
     }
 
-    /* BOTÕES SOCIAIS SIMPLIFICADOS E CLEAN */
-    .header-socials {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        flex-wrap: wrap;
-    }
+    /* BOTÕES SOCIAIS SÓ TEXTO DOURADO SEM FUNDO */
+    .header-socials { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
 
     .header-social-item {
         text-decoration: none;
-        font-size: 0.95rem;
-        font-weight: 900; /* Texto preto negrito solicitado */
-        color: #000000 !important; 
+        font-size: 1.1rem;
+        font-weight: 900; /* Negrito máximo */
+        color: var(--gold) !important; 
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 22px;
-        border-radius: 12px;
-        background: #ffffff; /* Fundo branco para não poluir */
-        border: 1px solid rgba(255,255,255,0.3);
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        gap: 10px;
+        padding: 5px 0;
+        transition: 0.3s ease;
     }
 
     .header-social-item:hover {
+        color: var(--gold-light) !important;
         transform: translateY(-2px);
-        background: #f1f5f9;
     }
 
-    /* Cores apenas nos ícones */
-    .insta-link i { color: #e1306c; }
-    .whats-link i { color: #25d366; }
+    .header-social-item i { font-size: 1.3rem; }
 
-    /* BUSCA UNIFICADA */
+    /* BARRA DE BUSCA */
     .search-section {
         background: var(--white);
         padding: 20px;
         position: sticky;
         top: 0;
         z-index: 1000;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid var(--gold);
         display: flex;
         justify-content: center;
     }
@@ -95,24 +84,13 @@
         width: 100%;
         max-width: 700px;
         background: var(--white);
-        border: 1px solid var(--border);
+        border: 2px solid var(--gold);
         border-radius: 50px;
         padding: 5px 15px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
-    .search-select {
-        padding: 10px;
-        border: none;
-        background: transparent;
-        font-weight: 700;
-        outline: none;
-        cursor: pointer;
-        min-width: 120px;
-        border-right: 1px solid var(--border);
-    }
-
-    .search-input { flex-grow: 1; padding: 10px; border: none; background: transparent; outline: none; font-size: 16px; }
+    .search-select { padding: 10px; border: none; font-weight: 800; outline: none; border-right: 1px solid var(--gold); background: transparent; }
+    .search-input { flex-grow: 1; padding: 10px; border: none; outline: none; font-size: 16px; font-weight: 600; }
 
     /* GRID E PRODUTOS */
     .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
@@ -120,13 +98,13 @@
     
     .card { 
         background: var(--white); border-radius: 24px; overflow: hidden; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; 
         border: 1px solid #f1f5f9; transition: 0.3s;
     }
 
     .img-box { 
         width: 100%; height: 280px; display: flex; align-items: center; 
-        justify-content: center; background: #fff; padding: 15px; 
+        justify-content: center; background: #fff; padding: 15px; cursor: zoom-in;
     }
     .img-box img { width: 100%; height: 100%; object-fit: contain; }
 
@@ -140,16 +118,23 @@
         text-decoration: none; font-weight: 800; border-radius: 16px; 
     }
 
-    .wa-float {
-        position: fixed; bottom: 30px; right: 30px; background: var(--whatsapp); color: white; 
-        width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; 
-        justify-content: center; font-size: 32px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 2000;
+    /* MODAL DE IMAGEM AMPLIADA */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 3000;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.95);
+        align-items: center; justify-content: center;
+        cursor: zoom-out;
     }
+    .modal-content { max-width: 90%; max-height: 90%; border-radius: 10px; border: 2px solid var(--gold); }
 
     @media (max-width: 600px) { 
         .grid-produtos { grid-template-columns: 1fr 1fr; gap: 12px; }
-        .img-box { height: 200px; }
+        .img-box { height: 180px; }
         .logo { width: 220px; }
+        .header-social-item { font-size: 0.9rem; gap: 6px; }
     }
   </style>
 </head>
@@ -157,13 +142,14 @@
 
 <header>
   <img src="https://i.postimg.cc/N0D8vD8T/crediariomeirelles.jpg" alt="Crediário Meirelles" class="logo">
-  <div class="tagline">QUALIDADE E CONFIANÇA PARA SUA CASA</div>
+  <div class="tagline">Qualidade e Confiança para sua Casa</div>
+  
   <div class="header-socials">
-    <a href="https://www.instagram.com/crediariomeirelles" target="_blank" class="header-social-item insta-link">
-        <i class="fa-brands fa-instagram"></i> Instagram
+    <a href="https://www.instagram.com/crediariomeirelles" target="_blank" class="header-social-item">
+        <i class="fa-brands fa-instagram"></i> @crediariomeirelles
     </a>
-    <a href="https://wa.me/554888337779" target="_blank" class="header-social-item whats-link">
-        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+    <a href="https://wa.me/554888337779" target="_blank" class="header-social-item">
+        <i class="fa-brands fa-whatsapp"></i> (48) 98833-7779
     </a>
   </div>
 </header>
@@ -174,25 +160,22 @@
             <option value="todos">Categorias</option>
         </select>
         <input type="text" id="inputBusca" class="search-input" placeholder="O que você está procurando?" onkeyup="executarBusca()">
-        <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
     </div>
 </div>
 
 <div class="container">
-    <div class="grid-produtos" id="lista">
-        <p style="grid-column: 1/-1; text-align: center; padding: 50px;">Carregando ofertas...</p>
-    </div>
+    <div id="lista" class="grid-produtos"></div>
 </div>
 
-<a href="https://wa.me/554888337779" class="wa-float" target="_blank">
-    <i class="fa-brands fa-whatsapp"></i>
-</a>
+<div id="fotoModal" class="modal" onclick="this.style.display='none'">
+    <img class="modal-content" id="imgExpandida">
+</div>
 
 <script>
   const WHATSAPP_CONTATO = "554888337779";
   const SHEET_ID = '16FzPEau-EH0E7P13Mq-CFVT0QZceQMLwTUSQ4aZXXf0';
   const GID = '740385436'; 
-  const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&cachebust=${Date.now()}`;
+  const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
 
   let produtos = [];
 
@@ -206,18 +189,16 @@
       produtos = json.table.rows.map(row => {
         const c = row.c;
         return {
-          cat: c[0] && c[0].v ? String(c[0].v) : "Geral",
-          nome: c[1] && c[1].v ? String(c[1].v) : "",
-          preco: c[2] && c[2].v ? parseFloat(String(c[2].v).replace(',', '.')) : 0,
-          url: c[3] && c[3].v ? String(c[3].v).trim() : ""
+          cat: c[0]?.v || "Geral",
+          nome: c[1]?.v || "",
+          preco: c[2]?.v ? parseFloat(String(c[2].v).replace(',', '.')) : 0,
+          url: c[3]?.v || ""
         };
       }).filter(p => p.nome.length > 1 && p.url.startsWith('http'));
 
       popularSelect();
       renderizar(produtos); 
-    } catch (e) {
-      document.getElementById('lista').innerHTML = "<p>Erro ao conectar com a planilha.</p>";
-    }
+    } catch (e) { console.error(e); }
   }
 
   function popularSelect() {
@@ -225,8 +206,7 @@
     const categoriasUnicas = [...new Set(produtos.map(p => p.cat))].sort();
     categoriasUnicas.forEach(cat => {
       const option = document.createElement('option');
-      option.value = cat;
-      option.textContent = cat;
+      option.value = cat; option.textContent = cat;
       select.appendChild(option);
     });
   }
@@ -242,15 +222,16 @@
     renderizar(filtrados);
   }
 
+  function abrirFoto(url) {
+      document.getElementById('fotoModal').style.display = "flex";
+      document.getElementById('imgExpandida').src = url;
+  }
+
   function renderizar(dados) {
     const lista = document.getElementById('lista');
-    if(dados.length === 0) {
-        lista.innerHTML = "<p style='grid-column:1/-1; text-align:center; padding:50px;'>Nenhum item encontrado.</p>";
-        return;
-    }
     lista.innerHTML = dados.map(p => `
       <div class="card">
-        <div class="img-box">
+        <div class="img-box" onclick="abrirFoto('${p.url}')">
           <img src="${p.url}" alt="${p.nome}" loading="lazy">
         </div>
         <div class="info">
