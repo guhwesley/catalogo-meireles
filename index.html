@@ -12,6 +12,7 @@
         --bg: #f8fafc; 
         --text: #1a202c; 
         --whatsapp: #25d366; 
+        --instagram: #e4405f;
         --white: #ffffff;
         --border: #e2e8f0;
     }
@@ -24,12 +25,46 @@
         text-align: center; 
         color: white; 
     }
+    
     .logo { 
-        width: 180px; 
+        width: 190px; /* Logo ajustada para maior presença */
         border-radius: 20px; 
-        margin-bottom: 10px; 
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+        margin-bottom: 12px; 
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        border: 2px solid rgba(255,255,255,0.1);
     }
+
+    .tagline { font-size: 0.95rem; font-weight: 700; margin-bottom: 15px; opacity: 0.9; letter-spacing: 0.5px; }
+
+    /* Estilo dos Links Sociais no Topo */
+    .header-socials {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
+    .header-social-item {
+        color: white;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: 0.3s;
+        padding: 5px 12px;
+        border-radius: 50px;
+        background: rgba(255,255,255,0.1);
+    }
+
+    .header-social-item:hover {
+        background: rgba(255,255,255,0.2);
+        transform: translateY(-2px);
+    }
+
+    .header-social-item i.fa-instagram { color: #ff6b6b; }
+    .header-social-item i.fa-whatsapp { color: var(--whatsapp); }
 
     /* BARRA DE PESQUISA UNIFICADA */
     .search-section {
@@ -67,79 +102,44 @@
         margin-right: 10px;
     }
 
-    .search-input {
-        flex-grow: 1;
-        padding: 10px;
-        border: none;
-        background: transparent;
-        outline: none;
-        font-size: 16px;
-    }
+    .search-input { flex-grow: 1; padding: 10px; border: none; background: transparent; outline: none; font-size: 16px; }
 
-    /* PADRONIZAÇÃO DAS IMAGENS */
+    /* GRID E CARDS PADRONIZADOS */
     .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
     .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
     
     .card { 
-        background: var(--white); 
-        border-radius: 24px; 
-        overflow: hidden; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
-        display: flex; 
-        flex-direction: column; 
-        border: 1px solid #f1f5f9;
+        background: var(--white); border-radius: 24px; overflow: hidden; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; 
+        border: 1px solid #f1f5f9; transition: 0.3s;
     }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
 
-    /* Caixa da imagem com tamanho fixo */
-    .img-box { 
-        width: 100%; 
-        height: 250px; /* Altura fixa para padronizar */
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        background: #fff; 
-        overflow: hidden;
-        padding: 10px;
-    }
-
-    /* Ajuste da imagem para preencher sem distorcer */
-    .img-box img { 
-        width: 100%; 
-        height: 100%; 
-        object-fit: contain; /* Garante que a imagem inteira apareça sem cortes */
-        transition: 0.3s;
-    }
-
-    .card:hover .img-box img { transform: scale(1.05); }
+    .img-box { width: 100%; height: 260px; display: flex; align-items: center; justify-content: center; background: #fff; padding: 15px; overflow: hidden; }
+    .img-box img { width: 100%; height: 100%; object-fit: contain; }
 
     .info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-    .nome { font-size: 16px; min-height: 45px; margin-bottom: 10px; font-weight: 700; color: #334155; }
+    .nome { font-size: 16px; min-height: 45px; margin-bottom: 8px; font-weight: 700; color: #334155; }
     .preco { font-size: 24px; color: var(--primary); font-weight: 900; margin-bottom: 15px; }
 
     .btn-whats { 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        gap: 10px; 
-        background: var(--whatsapp); 
-        color: white; 
-        padding: 14px; 
-        text-decoration: none; 
-        font-weight: 800; 
-        border-radius: 15px; 
-        transition: 0.3s;
+        display: flex; align-items: center; justify-content: center; gap: 10px; 
+        background: var(--whatsapp); color: white; padding: 14px; 
+        text-decoration: none; font-weight: 800; border-radius: 15px; 
     }
-    .btn-whats:hover { filter: brightness(1.1); }
 
+    /* WHATSAPP FLUTUANTE */
     .wa-float {
-        position: fixed; bottom: 25px; right: 25px; background: var(--whatsapp); color: white; 
+        position: fixed; bottom: 30px; right: 30px; background: var(--whatsapp); color: white; 
         width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; 
-        justify-content: center; font-size: 30px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); z-index: 2000;
+        justify-content: center; font-size: 30px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4); z-index: 2000;
     }
 
     @media (max-width: 600px) { 
         .grid-produtos { grid-template-columns: 1fr 1fr; gap: 12px; }
-        .img-box { height: 180px; } /* Altura menor para celulares */
+        .img-box { height: 190px; }
+        .header-socials { flex-direction: column; gap: 8px; align-items: center; }
+        .logo { width: 160px; }
     }
   </style>
 </head>
@@ -147,7 +147,16 @@
 
 <header>
   <img src="https://i.postimg.cc/N0D8vD8T/crediariomeirelles.jpg" alt="Crediário Meirelles" class="logo">
-  <div style="font-size: 0.9rem; opacity: 0.8; font-weight: 600;">QUALIDADE E CONFIANÇA PARA SUA CASA</div>
+  <div class="tagline">QUALIDADE E CONFIANÇA PARA SUA CASA</div>
+  
+  <div class="header-socials">
+    <a href="https://www.instagram.com/crediariomeirelles" target="_blank" class="header-social-item">
+        <i class="fa-brands fa-instagram"></i> @crediariomeirelles
+    </a>
+    <a href="https://wa.me/554888337779" target="_blank" class="header-social-item">
+        <i class="fa-brands fa-whatsapp"></i> (48) 98833-7779
+    </a>
+  </div>
 </header>
 
 <div class="search-section">
@@ -162,7 +171,7 @@
 
 <div class="container">
     <div class="grid-produtos" id="lista">
-        <p style="grid-column: 1/-1; text-align: center; padding: 50px;">Carregando catálogo...</p>
+        <p style="grid-column: 1/-1; text-align: center; padding: 50px;">Carregando ofertas exclusivas...</p>
     </div>
 </div>
 
@@ -198,7 +207,7 @@
       popularSelect();
       renderizar(produtos); 
     } catch (e) {
-      document.getElementById('lista').innerHTML = "<p>Erro ao conectar com a planilha do Crediário Meirelles.</p>";
+      document.getElementById('lista').innerHTML = "<p>Erro ao carregar os dados. Verifique sua conexão.</p>";
     }
   }
 
@@ -229,7 +238,7 @@
   function renderizar(dados) {
     const lista = document.getElementById('lista');
     if(dados.length === 0) {
-        lista.innerHTML = "<p style='grid-column:1/-1; text-align:center; padding:50px;'>Nenhum produto encontrado.</p>";
+        lista.innerHTML = "<p style='grid-column:1/-1; text-align:center; padding:50px;'>Produto não encontrado no catálogo.</p>";
         return;
     }
 
