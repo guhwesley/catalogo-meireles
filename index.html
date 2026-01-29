@@ -25,7 +25,7 @@
         color: white; 
     }
     
-    /* LOGO GRANDE E IMPONENTE */
+    /* LOGO GRANDE (300px) */
     .logo { 
         width: 300px; 
         max-width: 95%; 
@@ -44,49 +44,38 @@
         text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
-    /* LINKS SOCIAIS COM TEXTO PRETO NEGRITO */
+    /* BOTÕES SOCIAIS SIMPLIFICADOS E CLEAN */
     .header-socials {
         display: flex;
         justify-content: center;
-        gap: 15px;
+        gap: 12px;
         flex-wrap: wrap;
     }
 
     .header-social-item {
         text-decoration: none;
-        font-size: 1rem;
-        /* Texto em Preto e Super Negrito */
-        font-weight: 900; 
+        font-size: 0.95rem;
+        font-weight: 900; /* Texto preto negrito solicitado */
         color: #000000 !important; 
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 12px 25px;
-        border-radius: 50px;
-        transition: 0.3s;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        gap: 8px;
+        padding: 10px 22px;
+        border-radius: 12px;
+        background: #ffffff; /* Fundo branco para não poluir */
+        border: 1px solid rgba(255,255,255,0.3);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    /* Estilo Real Instagram Gradiente */
-    .insta-link { 
-        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    .header-social-item:hover {
+        transform: translateY(-2px);
+        background: #f1f5f9;
     }
 
-    /* Estilo Real WhatsApp Verde */
-    .whats-link { 
-        background-color: var(--whatsapp);
-    }
-
-    .header-social-item:hover { 
-        transform: translateY(-3px); 
-        filter: brightness(1.1);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-
-    /* Ícones pretos para combinar com o texto */
-    .header-social-item i {
-        color: #000000;
-    }
+    /* Cores apenas nos ícones */
+    .insta-link i { color: #e1306c; }
+    .whats-link i { color: #25d366; }
 
     /* BUSCA UNIFICADA */
     .search-section {
@@ -125,7 +114,7 @@
 
     .search-input { flex-grow: 1; padding: 10px; border: none; background: transparent; outline: none; font-size: 16px; }
 
-    /* GRID E CARDS */
+    /* GRID E PRODUTOS */
     .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
     .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
     
@@ -136,14 +125,8 @@
     }
 
     .img-box { 
-        width: 100%; 
-        height: 280px; 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        background: #fff; 
-        padding: 15px; 
-        overflow: hidden; 
+        width: 100%; height: 280px; display: flex; align-items: center; 
+        justify-content: center; background: #fff; padding: 15px; 
     }
     .img-box img { width: 100%; height: 100%; object-fit: contain; }
 
@@ -167,7 +150,6 @@
         .grid-produtos { grid-template-columns: 1fr 1fr; gap: 12px; }
         .img-box { height: 200px; }
         .logo { width: 220px; }
-        .header-social-item { width: 90%; justify-content: center; }
     }
   </style>
 </head>
@@ -178,10 +160,10 @@
   <div class="tagline">QUALIDADE E CONFIANÇA PARA SUA CASA</div>
   <div class="header-socials">
     <a href="https://www.instagram.com/crediariomeirelles" target="_blank" class="header-social-item insta-link">
-        <i class="fa-brands fa-instagram"></i> @crediariomeirelles
+        <i class="fa-brands fa-instagram"></i> Instagram
     </a>
     <a href="https://wa.me/554888337779" target="_blank" class="header-social-item whats-link">
-        <i class="fa-brands fa-whatsapp"></i> (48) 98833-7779
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp
     </a>
   </div>
 </header>
